@@ -1,12 +1,13 @@
 package sandbox.serde.avro;
 
 import org.junit.Test;
+import sandbox.serde.Serde;
 
 import static org.junit.Assert.assertEquals;
 
 public class SpecificAvroSerdeTests {
 
-	private final SpecificAvroSerde<User> serde = new SpecificAvroSerde<>(User.class);
+	private final Serde<User> serde = new SpecificAvroSerde<>(User.class);
 
 	@Test
 	public void serde() {

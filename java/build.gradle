@@ -19,4 +19,5 @@ dependencies {
 
     // test dependencies
     testImplementation 'junit:junit:4.13'
+    testRuntime files('src/test/avro')
 }

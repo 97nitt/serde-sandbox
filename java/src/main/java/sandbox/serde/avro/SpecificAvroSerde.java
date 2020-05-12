@@ -1,6 +1,7 @@
 package sandbox.serde.avro;
 
 import org.apache.avro.io.BinaryEncoder;
+import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Decoder;
 import org.apache.avro.io.DecoderFactory;
@@ -29,7 +30,7 @@ public class SpecificAvroSerde<T> implements Serde<T>  {
 	@Override
 	public T deserialize(byte[] bytes) {
 		try {
-			SpecificDatumReader<T> reader = new SpecificDatumReader<>(type);
+			DatumReader<T> reader = new SpecificDatumReader<>(type);
 			Decoder decoder = DecoderFactory.get().binaryDecoder(bytes, null);
 			return reader.read(null, decoder);
 
