@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class JsonSerdeTests {
 
-	private final Serde serde = new JsonSerde();
+	private final Serde<TestData> serde = new JsonSerde<>(TestData.class);
 
 	@Test
 	public void serde() {
@@ -21,7 +21,7 @@ public class JsonSerdeTests {
 		assertEquals("{\"foo\":\"one\",\"bar\":\"two\"}", json);
 
 		// deserialize bytes
-		TestData deserialized = serde.deserialize(bytes, TestData.class);
+		TestData deserialized = serde.deserialize(bytes);
 		assertEquals(data, deserialized);
 	}
 }

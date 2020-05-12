@@ -11,33 +11,35 @@ import java.io.IOException;
  * JSON serialization using <a href="https://github.com/FasterXML/jackson-databind">Jackson</a>.
  *
  */
-public class JsonSerde implements Serde {
+public class JsonSerde<T> implements Serde<T> {
 
+	private final Class<T> type;
 	private final ObjectMapper objectMapper;
 
-	public JsonSerde() {
-		this(new ObjectMapper());
+	public JsonSerde(Class<T> type) {
+		this(type, new ObjectMapper());
 	}
 
-	public JsonSerde(ObjectMapper objectMapper) {
+	public JsonSerde(Class<T> type, ObjectMapper objectMapper) {
+		this.type = type;
 		this.objectMapper = objectMapper;
 	}
 
 	@Override
-	public <T> T deserialize(byte[] bytes, Class<T> type) {
+	public T deserialize(byte[] bytes) {
 		try {
 			return objectMapper.readValue(bytes, type);
 		} catch (IOException e) {
-			throw new SerdeException("Unable to deserialize byte array to type: " + type.getName(), e);
+			throw new SerdeException("Failed to deserialize byte array to type: " + type.getName(), e);
 		}
 	}
 
 	@Override
-	public <T> byte[] serialize(T t) {
+	public byte[] serialize(T t) {
 		try {
 			return objectMapper.writeValueAsBytes(t);
 		} catch (JsonProcessingException e) {
-			throw new SerdeException("Unable to serialize: " + t, e);
+			throw new SerdeException("Failed to serialize: " + t, e);
 		}
 	}
 }
