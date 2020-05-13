@@ -12,16 +12,17 @@ public class SpecificAvroSerdeTests {
 	@Test
 	public void serde() {
 		// given
-		User user = new User();
-		user.setName("Charlie");
-		user.setFavoriteColor("brown");
-		user.setFavoriteNumber(7);
+		User input = new User();
+		input.setId(1);
+		input.setEmail("john.doe@gmail.com");
+		input.setFirstName("John");
+		input.setLastName("Doe");
 
 		// serialize to bytes
-		byte[] bytes = serde.serialize(user);
+		byte[] bytes = serde.serialize(input);
 
 		// deserialize bytes
 		User deserialized = serde.deserialize(bytes);
-		assertEquals(user, deserialized);
+		assertEquals(input, deserialized);
 	}
 }

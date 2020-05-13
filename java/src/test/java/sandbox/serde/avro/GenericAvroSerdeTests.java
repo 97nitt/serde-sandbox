@@ -28,18 +28,20 @@ public class GenericAvroSerdeTests {
 	@Test
 	public void serde() {
 		// given
-		GenericRecord user = new GenericData.Record(schema);
-		user.put("name", "Charlie");
-		user.put("favoriteColor", "brown");
-		user.put("favoriteNumber", 7);
+		GenericRecord input = new GenericData.Record(schema);
+		input.put("id", 1);
+		input.put("email", "john.doe@gmail.com");
+		input.put("firstName", "John");
+		input.put("lastName", "Doe");
 
 		// serialize to bytes
-		byte[] bytes = serde.serialize(user);
+		byte[] bytes = serde.serialize(input);
 
 		// deserialize bytes
 		GenericRecord deserialized = serde.deserialize(bytes);
-		assertEquals(new Utf8("Charlie"), deserialized.get("name"));
-		assertEquals(new Utf8("brown"), deserialized.get("favoriteColor"));
-		assertEquals(7, deserialized.get("favoriteNumber"));
+		assertEquals(1, deserialized.get("id"));
+		assertEquals(new Utf8("john.doe@gmail.com"), deserialized.get("email"));
+		assertEquals(new Utf8("John"), deserialized.get("firstName"));
+		assertEquals(new Utf8("Doe"), deserialized.get("lastName"));
 	}
 }

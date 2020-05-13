@@ -2,8 +2,9 @@
  "type": "record",
  "name": "User",
  "fields": [
-     {"name": "name", "type": "string"},
-     {"name": "favoriteNumber",  "type": ["int", "null"]},
-     {"name": "favoriteColor", "type": ["string", "null"]}
+     {"name": "id", "type": "int"},
+     {"name": "email", "type": "string"},
+     {"name": "firstName", "type": ["string", "null"]},
+     {"name": "lastName", "type": ["string", "null"]}
  ]
 }

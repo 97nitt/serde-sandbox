@@ -2,26 +2,28 @@ package sandbox.serde.json;
 
 import org.junit.Test;
 import sandbox.serde.Serde;
-import sandbox.serde.TestData;
+import sandbox.serde.User;
 
 import static org.junit.Assert.assertEquals;
 
 public class JsonSerdeTests {
 
-	private final Serde<TestData> serde = new JsonSerde<>(TestData.class);
+	private final Serde<User> serde = new JsonSerde<>(User.class);
 
 	@Test
 	public void serde() {
 		// given
-		TestData data = new TestData("one", "two");
+		User input = new User(1, "john.doe@gmail.com", "John", "Doe");
 
 		// serialize to bytes
-		byte[] bytes = serde.serialize(data);
+		byte[] bytes = serde.serialize(input);
 		String json = new String(bytes);
-		assertEquals("{\"foo\":\"one\",\"bar\":\"two\"}", json);
+		assertEquals(
+				"{\"id\":1,\"email\":\"john.doe@gmail.com\",\"firstName\":\"John\",\"lastName\":\"Doe\"}",
+				json);
 
 		// deserialize bytes
-		TestData deserialized = serde.deserialize(bytes);
-		assertEquals(data, deserialized);
+		User deserialized = serde.deserialize(bytes);
+		assertEquals(input, deserialized);
 	}
 }

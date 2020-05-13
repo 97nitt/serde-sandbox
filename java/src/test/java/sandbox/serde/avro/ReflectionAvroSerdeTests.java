@@ -2,24 +2,24 @@ package sandbox.serde.avro;
 
 import org.junit.Test;
 import sandbox.serde.Serde;
-import sandbox.serde.TestData;
+import sandbox.serde.User;
 
 import static org.junit.Assert.assertEquals;
 
 public class ReflectionAvroSerdeTests {
 
-	private final Serde<TestData> serde = new ReflectionAvroSerde<>(TestData.class);
+	private final Serde<User> serde = new ReflectionAvroSerde<>(User.class);
 
 	@Test
 	public void serde() {
 		// given
-		TestData data = new TestData("one", "two");
+		User input = new User(1, "john.doe@gmail.com", "John", "Doe");
 
 		// serialize to bytes
-		byte[] bytes = serde.serialize(data);
+		byte[] bytes = serde.serialize(input);
 
 		// deserialize bytes
-		TestData deserialized = serde.deserialize(bytes);
-		assertEquals(data, deserialized);
+		User deserialized = serde.deserialize(bytes);
+		assertEquals(input, deserialized);
 	}
 }
