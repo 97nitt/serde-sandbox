@@ -4,7 +4,7 @@
  "fields": [
      {"name": "id", "type": "int"},
      {"name": "email", "type": "string"},
-     {"name": "firstName", "type": ["string", "null"]},
-     {"name": "lastName", "type": ["string", "null"]}
+     {"name": "firstName", "type": ["null", "string"], "default": null},
+     {"name": "lastName", "type": ["null", "string"], "default": null}
  ]
 }

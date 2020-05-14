@@ -17,7 +17,7 @@ import org.apache.avro.reflect.Nullable;
 @NoArgsConstructor
 public class User {
 
-	private long id;
+	private int id;
 
 	private String email;
 
