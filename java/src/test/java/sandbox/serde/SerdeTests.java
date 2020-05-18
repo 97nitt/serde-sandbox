@@ -8,6 +8,7 @@ import sandbox.serde.avro.GenericAvroSerde;
 import sandbox.serde.avro.ReflectionAvroSerde;
 import sandbox.serde.avro.SpecificAvroSerde;
 import sandbox.serde.json.JsonSerde;
+import sandbox.serde.proto.ProtoSerde;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -20,10 +21,11 @@ public class SerdeTests {
 
 	private static final Schema schema = sandbox.serde.avro.User.getClassSchema();
 
+	private final Serde<sandbox.serde.User> jsonSerde = new JsonSerde<>(sandbox.serde.User.class);
+	private final Serde<sandbox.serde.User> reflectionAvroSerde = new ReflectionAvroSerde<>(sandbox.serde.User.class);
 	private final Serde<GenericRecord> genericAvroSerde = new GenericAvroSerde(schema);
 	private final Serde<sandbox.serde.avro.User> specificAvroSerde = new SpecificAvroSerde<>(sandbox.serde.avro.User.class);
-	private final Serde<sandbox.serde.User> reflectionAvroSerde = new ReflectionAvroSerde<>(sandbox.serde.User.class);
-	private final Serde<sandbox.serde.User> jsonSerde = new JsonSerde<>(sandbox.serde.User.class);
+	private final Serde<sandbox.serde.proto.UserProto.User> protoSerde = new ProtoSerde<>(sandbox.serde.proto.UserProto.User.class);
 
 	@Test
 	public void compare() {
@@ -48,16 +50,26 @@ public class SerdeTests {
 		generic.put("firstName", pojo.getFirstName());
 		generic.put("lastName", pojo.getLastName());
 
+		// create representation of a user with Protocol buffers
+		sandbox.serde.proto.UserProto.User protoMessage = sandbox.serde.proto.UserProto.User.newBuilder()
+				.setId(pojo.getId())
+				.setEmail(pojo.getEmail())
+				.setFirstName(pojo.getFirstName())
+				.setLastName(pojo.getLastName())
+				.build();
+
 		// serialize
 		byte[] json = jsonSerde.serialize(pojo);
 		byte[] avro = reflectionAvroSerde.serialize(pojo);
+		byte[] proto = protoSerde.serialize(protoMessage);
 
 		// Avro-encoded data should be identical whether Reflection, Generic, or Specific serialization is used
 		assertArrayEquals(avro, genericAvroSerde.serialize(generic));
 		assertArrayEquals(avro, specificAvroSerde.serialize(specific));
 
-		// Avro-encoded data should be significantly smaller than JSON-encoded data
-		assertEquals(73, json.length);
+		// verify size of byte arrays (avro < proto < json)
 		assertEquals(31, avro.length);
+		assertEquals(33, proto.length);
+		assertEquals(73, json.length);
 	}
 }

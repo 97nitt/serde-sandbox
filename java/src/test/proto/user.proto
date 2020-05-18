@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package sandbox.serde.proto;
+
+option java_outer_classname = "UserProto";
+
+message User {
+    int32 id = 1;
+    string email = 2;
+    string firstName = 3;
+    string lastName = 4;
+}
