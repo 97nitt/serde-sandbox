@@ -1,28 +1,28 @@
 package sandbox.serde.avro;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import sandbox.serde.Serde;
 
-import static org.junit.Assert.assertEquals;
-
 public class SpecificAvroSerdeTests {
 
-	private final Serde<User> serde = new SpecificAvroSerde<>(User.class);
+  private final Serde<User> serde = new SpecificAvroSerde<>(User.class);
 
-	@Test
-	public void serde() {
-		// given
-		User input = new User();
-		input.setId(1);
-		input.setEmail("john.doe@gmail.com");
-		input.setFirstName("John");
-		input.setLastName("Doe");
+  @Test
+  public void serde() {
+    // given
+    User input = new User();
+    input.setId(1);
+    input.setEmail("john.doe@gmail.com");
+    input.setFirstName("John");
+    input.setLastName("Doe");
 
-		// serialize to bytes
-		byte[] bytes = serde.serialize(input);
+    // serialize to bytes
+    byte[] bytes = serde.serialize(input);
 
-		// deserialize bytes
-		User deserialized = serde.deserialize(bytes);
-		assertEquals(input, deserialized);
-	}
+    // deserialize bytes
+    User deserialized = serde.deserialize(bytes);
+    assertEquals(input, deserialized);
+  }
 }

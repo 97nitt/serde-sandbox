@@ -8,22 +8,19 @@ import org.apache.avro.reflect.Nullable;
 /**
  * Simple POJO modeling a user.
  *
- * {@link org.apache.avro.reflect} annotations are used to influence Avro schema generation
- * via reflection.
- *
+ * <p>{@link org.apache.avro.reflect} annotations are used to influence Avro schema generation via
+ * reflection.
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
 
-	private int id;
+  private int id;
 
-	private String email;
+  private String email;
 
-	@Nullable
-	private String firstName;
+  @Nullable private String firstName;
 
-	@Nullable
-	private String lastName;
+  @Nullable private String lastName;
 }

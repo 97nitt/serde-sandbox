@@ -2,6 +2,7 @@ plugins {
     id 'idea'
     id 'java'
     id 'java-test-fixtures'
+    id 'com.github.sherter.google-java-format' version '0.8'
     id 'com.commercehub.gradle.plugin.avro' version '0.19.1'
     id "com.google.protobuf" version "0.8.12"
 }
