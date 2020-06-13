@@ -1,12 +1,12 @@
 package sandbox.serde;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import sandbox.serde.avro.GenericAvroSerde;
 import sandbox.serde.avro.ReflectionAvroSerde;
 import sandbox.serde.avro.SpecificAvroSerde;
