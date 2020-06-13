@@ -10,7 +10,8 @@ plugins {
 ext {
     avroVersion = '1.9.2'
     jacksonVersion = '2.11.0'
-    junitVersion = '4.13'
+    junit4Version = '4.13'
+    junit5Version = '5.6.2'
     lombokVersion = '1.18.12'
     protobufVersion = '3.12.0'
 }
@@ -31,12 +32,17 @@ dependencies {
     testFixturesImplementation "org.apache.avro:avro:$avroVersion"
 
     // test dependencies
-    testImplementation "junit:junit:$junitVersion"
-    testRuntime files('src/test/avro')
+    testImplementation "junit:junit:$junit4Version"
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:$junit5Version")
+    testRuntimeOnly files('src/test/avro')
 }
 
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:$protobufVersion"
     }
+}
+
+test {
+    useJUnitPlatform()
 }
